@@ -1,8 +1,8 @@
 import os
 from datetime import datetime, timedelta
 
-# Start from the first Sunday of the year for better alignment
-start_date = datetime(2022, 1, 2)  # Adjust to match your desired year
+# Start from the first Sunday of the year
+start_date = datetime(2022, 1, 2)  # Adjust for your target year
 
 # "I LOVE YOU" pattern (7 rows for weeks, spread across 12 months)
 pattern = [
@@ -15,14 +15,17 @@ pattern = [
     "       ###  ###  ###   #   #  #   # ###  "
 ]
 
-# Ensure commits are distributed throughout the year
-days_gap = 365 // len(pattern[0])  # Space commits throughout the year
+# Total number of weeks in a year (~52 weeks)
+weeks_in_year = 52
+
+# Adjust the gap to spread commits evenly
+days_gap = (365 - 7 * len(pattern[0])) // len(pattern[0])  
 
 # Loop through the pattern and commit on specific dates
-for row in range(len(pattern)):
-    for col in range(len(pattern[row])):
+for row in range(len(pattern)):  # Loop through weeks
+    for col in range(len(pattern[row])):  # Loop through days in the week
         if pattern[row][col] == "#":
-            commit_date = (start_date + timedelta(days=row*7 + col * days_gap)).strftime("%Y-%m-%dT12:00:00")
+            commit_date = (start_date + timedelta(weeks=row, days=col * days_gap)).strftime("%Y-%m-%dT12:00:00")
 
             # Set environment variables for Git
             os.environ['GIT_AUTHOR_DATE'] = commit_date
