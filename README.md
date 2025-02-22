@@ -1,5 +1,3 @@
-
-
 **EduReach Android App: Complete Blueprint**
 
 **I. Project Goals and Scope:**
