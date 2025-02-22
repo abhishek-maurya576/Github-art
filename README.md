@@ -1,5 +1,5 @@
 **EduReach Android App: Complete Blueprint**
-
+ 
 **I. Project Goals and Scope:**
 
 *   **Goal:** Develop a functional Android app that provides personalized learning experiences to students, leverages AI for learning gap analysis, and demonstrates potential for social impact in underserved communities.
