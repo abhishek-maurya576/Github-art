@@ -64,41 +64,134 @@ A **buffer** is a portion of memory set aside to store data temporarily while it
 
 ---
 
-## 📘 3. **Disk Scheduling**
 
-Multiple processes may request disk access at the same time. Disk scheduling algorithms determine the order in which these requests are served.
 
-### 🔹 Why Scheduling is Needed:
-- Disk heads have to **move (seek)** to the data location.
-- Poor scheduling = more seek time = low performance.
-
-### 🔹 Common Disk Scheduling Algorithms:
-
-1. **FCFS (First Come First Serve):**
-   - Processes requests in the order they arrive.
-   - Simple but may lead to long delays.
-
-2. **SSTF (Shortest Seek Time First):**
-   - Selects the request closest to current head position.
-   - Reduces total seek time but may cause starvation.
-
-3. **SCAN (Elevator Algorithm):**
-   - Head moves in one direction, serves requests, then reverses.
-   - Fair and better than FCFS.
-
-4. **LOOK:**
-   - Like SCAN but turns around at last request, not end of disk.
-
-5. **C-SCAN (Circular SCAN):**
-   - Head moves in one direction only, returns to beginning after reaching end.
-   - Provides more uniform wait times.
-
-6. **C-LOOK:**
-   - Like C-SCAN but returns to first request, not beginning of disk.
-
-> **Example:** In SSTF, if head is at track 30 and requests are at 25, 32, 50, 60 – it will first go to 32 (nearest), not necessarily the first in queue.
+# 📘 3 **Disk Scheduling in Operating System**
 
 ---
+
+## 💡 What is Disk Scheduling?
+
+When multiple processes request data from a disk (like a hard drive), the **Operating System** needs to decide **which request to serve first**. This process is called **Disk Scheduling**.
+
+### 🎯 **Why Disk Scheduling is Important?**
+- Reduces **seek time** (time to move disk arm to required track)
+- Improves system **performance** and **response time**
+- Manages **multiple requests efficiently**
+
+---
+
+## 🔄 Components of Disk Access Time
+
+1. **Seek Time**: Time to move disk arm to desired track  
+2. **Rotational Latency**: Time for the desired sector to rotate under read/write head  
+3. **Transfer Time**: Time to actually read/write data
+
+> ⚠️ Out of these, **Seek Time** is the most variable and hence optimization target.
+
+---
+
+## 📊 Disk Scheduling Algorithms
+
+### 1. 🟢 **FCFS (First Come First Serve)**
+- Requests are processed **in the order** they arrive.
+- **Simple** to implement, but not always efficient.
+
+#### ✅ Example:
+Requests: 98, 183, 37, 122  
+Initial Head at: 100  
+Servicing Order: 98 → 183 → 37 → 122  
+🕒 Seek Time = Total arm movement = (100→98)+(98→183)+(183→37)+(37→122) = **236 cylinders**
+
+#### 🔴 Cons:
+- High average seek time
+- May serve far-away requests first
+
+---
+
+### 2. 🟢 **SSTF (Shortest Seek Time First)**
+- Chooses request **closest to current head** position.
+- Reduces total movement.
+
+#### ✅ Example:
+Requests: 98, 183, 37, 122  
+Initial Head at: 100  
+Closest = 98 → then 122 → then 183 → then 37  
+🕒 Total Movement = (100→98)+(98→122)+(122→183)+(183→37) = **208 cylinders**
+
+#### ⚠️ Drawback:
+- Can cause **starvation** of far requests
+
+---
+
+### 3. 🟢 **SCAN (Elevator Algorithm)**
+- Disk arm moves **in one direction**, serving all requests until end, then reverses.
+- Like an **elevator**: goes up, then down.
+
+#### ✅ Example:
+Head at: 50  
+Requests: 10, 20, 35, 70, 90  
+Moves: 35 → 20 → 10 → then turns → 70 → 90
+
+#### 🔄 Advantage:
+- Fair to all processes  
+- Better average seek time than FCFS
+
+---
+
+### 4. 🟢 **LOOK**
+- Like SCAN but **only goes as far as the last request** in each direction, not till disk end.
+
+#### 🔄 Advantage:
+- Less head movement than SCAN
+
+---
+
+### 5. 🟢 **C-SCAN (Circular SCAN)**
+- Head moves in **one direction** only.
+- After reaching the end, it jumps back to the beginning **without serving requests** on the way back.
+
+#### ✅ Example:
+Requests: 20, 40, 50, 130, 150  
+Head moves: 50 → 130 → 150 → (jump back to 20) → 40
+
+#### ✅ Advantage:
+- **Uniform wait time** for all requests
+
+---
+
+### 6. 🟢 **C-LOOK**
+- Same as C-SCAN, but only goes as far as **last request**, not end of disk.
+
+#### 🔄 Example:
+Requests: 20, 30, 100, 120  
+Head: 50  
+Movement: 100 → 120 → jump to 20 → 30
+
+---
+
+## 📌 Comparison Table
+
+| Algorithm | Type | Pros | Cons |
+|-----------|------|------|------|
+| FCFS | Non-Preemptive | Simple | High wait time |
+| SSTF | Non-Preemptive | Fast | Starvation |
+| SCAN | Elevator | Fair | Some delay |
+| LOOK | Optimized SCAN | Less movement | Slightly complex |
+| C-SCAN | Circular | Uniform wait | More movement |
+| C-LOOK | Circular + Optimized | Fast & Fair | Moderate complexity |
+
+---
+
+## 🧠 Summary
+
+- **Disk Scheduling** = Optimize which request is served first
+- **Goal** = Minimize **seek time**
+- Use **SSTF** for performance, **SCAN/C-SCAN** for fairness
+- Real-world systems use combinations or improvements of these
+
+---
+
 
 ## 📘 4. **RAID (Redundant Array of Independent Disks)**
 
