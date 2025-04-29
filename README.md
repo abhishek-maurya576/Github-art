@@ -1,4 +1,4 @@
-### **Comparison of Communication Styles & Thinking Patterns in the Group**  
+### **Comparison of Communication Styles & Thinking Patterns in the Group**   
 
 | **Aspect**          | **Abhishek (You)** | **Priyankar Shukla** | **Shivank Rastogi** | **Manglamm** | **Divyank Sharma** | **Amit Sonkar** |
 |---------------------|-------------------|----------------------|----------------------|--------------|-------------------|----------------|
