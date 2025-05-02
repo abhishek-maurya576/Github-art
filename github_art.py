@@ -1,4 +1,4 @@
-import os
+import os 
 from datetime import datetime, timedelta
 
 # Start from the first Sunday of the year
