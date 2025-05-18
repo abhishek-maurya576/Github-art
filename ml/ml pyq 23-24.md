@@ -1,4 +1,4 @@
-
+ 
 Based on the provided options for each question, I will answer the following:
 
 1.  **OR** (a) Differentiate between supervised, unsupervised and reinforcement learning with help of suitable examples.
